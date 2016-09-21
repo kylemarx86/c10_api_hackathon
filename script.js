@@ -118,8 +118,8 @@ var url = "";
 /**
  * Function to start the ajax call to itunes
  */
-function searchItunes() {
-    searchTerm = $('#searchIt').val();
+function searchItunes(search) {
+    searchTerm = search;
     url = "https://itunes.apple.com/search?media=music&order=popular&term=" + searchTerm + " soundtrack&callback=?";
     $.getJSON(url, function (data) {
         $('#musicSrc').attr('src', data.results[0].previewUrl);
@@ -142,7 +142,7 @@ function addClickHandlers() {
     $("#movieInfo").click(function() {
         var search = $('#search').val();
         makeTmdbAjaxCall(search);
-        searchItunes();
+        searchItunes(search);
     });
     $("#random").click(quoteToMovie);
 }
