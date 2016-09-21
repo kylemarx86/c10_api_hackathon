@@ -5,18 +5,26 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="script.js"></script>
+    <script src="music.js"></script>
 </head>
 <body>
     <header>
         <h1>SNAPPY TITLE</h1>
     </header>
     <div id="divForImage"> div for images <br>
+        <input type="text" id="searchIt" value="">
         <button id="ajaxCall">Make the AJAX request</button><br>
         <button id="movieInfo">Get Movie Data</button>
         <div id="divForQuote">
             quote div
         </div>
     </div>
-    <div id="divForMusicPlayer">div for music player</div>
+    <div id="divForMusicPlayer">
+        <audio id="music" controls>
+            <source id="musicSrc" type="audio/mpeg">
+        </audio><br>
+        <img id="musicImg">
+        <div id="artistName"></div>
+    </div>
 </body>
 </html>

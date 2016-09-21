@@ -2,12 +2,15 @@
 /**
  * makeFirstAjaxCall - makes a request to The Movie DB to return search results via AJAX
  */
+
+var search = "";
 function makeFirstAjaxCall() {
     console.log("SEARCH BUTTON CLICKED");
     console.log("FUNCTION START");
+    search = $('#searchIt').val();
     var dataToSendServer = {
         api_key: "7e73e5037ed00682f5aae1e5b6d940a4",
-        query: "inception"
+        query: search
     };
     console.log("BEGIN AJAX");
     $.ajax({
@@ -26,7 +29,16 @@ function makeFirstAjaxCall() {
 
         }
     });
-    console.log("END AJAX CALL")
+    console.log("END AJAX CALL");
+    console.log("search = ", search);
+}
+
+/**
+ * addClickHandlers - and click handler functions to dom elements
+ */
+function addClickHandlers() {
+    $("#ajaxCall").click(makeFirstAjaxCall);
+    $("#movieInfo").click(makeSecondAjaxCall);
 }
 /**
  * call addClickHandlers on page load
@@ -35,13 +47,6 @@ $(document).ready(function () {
     addClickHandlers();
     console.log("PAGE LOADED")
 });
-/**
- * addClickHandlers - and click handler functions to dom elements
- */
-function addClickHandlers() {
-    $("#ajaxCall").click(makeFirstAjaxCall);
-    $("#movieInfo").click(makeSecondAjaxCall);
-}
 /**
  * makeSecondAjaxCall - makes a request to The Movie DB to return "details" data from a specific movie via AJAX
  */
