@@ -2,12 +2,12 @@
 /**
  * makeFirstAjaxCall - makes a request to The Movie DB to return search results via AJAX
  */
-function makeAjaxCall() {
+function makeAjaxCall(movie) {
     console.log("BUTTON CLICKED");
     console.log("FUNCTION START");
     var dataToSendServer = {
         api_key: "7e73e5037ed00682f5aae1e5b6d940a4",
-        query: "star wars vii"
+        query: movie
     };
     var apiKey = {
         api_key: "7e73e5037ed00682f5aae1e5b6d940a4" // for second ajax call
@@ -60,32 +60,25 @@ $(document).ready(function () {
  * addClickHandlers - and click handler functions to dom elements
  */
 function addClickHandlers() {
-    $("#movieInfo").click(makeAjaxCall);
+    $("#movieInfo").click(function() {
+      makeAjaxCall('star wars vii');
+    });
+    $("#random").click(quoteToMovie);
 }
 
-////TODO: HOLD api-key => key AS ONE VARIABLE?
-////TODO: PATH PARAMETERS?
-
-// ajax call to movie quotes api and subsequent ajax call to omdb
-$.ajax({
-  type: "POST",
-  headers: {
-    "X-Mashape-Key": "OivH71yd3tmshl9YKzFH7BTzBVRQp1RaKLajsnafgL2aPsfP9V"
-  },
-  dataType: 'json',
-  url: 'https://andruxnet-random-famous-quotes.p.mashape.com/?cat=movies'      
-}).then(function(res) {
-  console.log(res);
-  var quote = res.quote;
-  var author = res.author;
-  var endPoint = 'http://www.omdbapi.com/?t=' + author + '&y=&plot=short&r=json';
-  console.log(quote + ' - ' + author);
-  return $.ajax({
-    type: "GET",
-    url: endPoint
+function quoteToMovie() {
+  $.ajax({
+    type: "POST",
+    headers: {
+      "X-Mashape-Key": "OivH71yd3tmshl9YKzFH7BTzBVRQp1RaKLajsnafgL2aPsfP9V"
+    },
+    dataType: 'json',
+    url: 'https://andruxnet-random-famous-quotes.p.mashape.com/?cat=movies'      
+  }).then(function(res) {
+    console.log(res);
+    var quote = res.quote;
+    var movie = res.author;
+    console.log(quote + ' - ' + movie);
+    makeAjaxCall(movie);
   });
-}).then(function(res) {
-  var plot = res.Plot;
-  if (res.Plot == undefined || res.Plot == 'N/A') plot = "plot not found";
-  console.log(plot);
-});
+}
