@@ -88,6 +88,7 @@ function makeTmdbAjaxCall(movie) {
                  * @type {string}
                  */
                 var moviePoster = "http://image.tmdb.org/t/p/original" + movieData.backdrop_path;
+                $("#divForQuote").empty();
                 $("body").css('background-image', 'url(' + moviePoster + ')');
                 $("<h1>").text(movieData.original_title).appendTo("#divForQuote");
                 $("<h2>").text(movieData.tagline).appendTo("#divForQuote");
