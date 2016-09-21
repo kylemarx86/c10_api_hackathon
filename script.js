@@ -110,7 +110,8 @@ $(document).ready(function () {
  */
 function addClickHandlers() {
     $("#movieInfo").click(function() {
-        makeAjaxCall('star wars vii');
+        var search = $('#search').val();
+        makeTmdbAjaxCall(search);
     });
     $("#random").click(quoteToMovie);
 }
