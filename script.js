@@ -39,19 +39,28 @@ function searchByKeyword(keyword) {
     keyword += '+trailer';
 
     $.ajax({
-        dataType: 'json',
-        url: 'https://www.googleapis.com/youtube/v3/search'
+        dataType: 'jsonp',
+        url: 'https://www.googleapis.com/youtube/v3/search',
+        method: 'get',
+        key: 'AIzaSyCJxCXv2qoUoEDzB7_GvxXJe_SqCJT_KJg',
+        q: keyword,
+        part: 'snippet',
+        maxResults: 5,
+        // type: 'video',
+        success: function (response) {
+            console.log('we got a movie');
+            globalResult = response;
+            // console.log(response);
+        },
+        error: function () {
+            console.log('what a failure?');
+        }
 
     });
 
-    var results = YouTube.Search.list('id,snippet', {q: 'dogs', maxResults: 25});
-    for(var i in results.items) {
-        var item = results.items[i];
-        console.log('[%s] Title: %s', item.id.videoId, item.snippet.title);
-    }
+    // var results = YouTube.Search.list('id,snippet', {q: 'dogs', maxResults: 25});
+    // for(var i in results.items) {
+    //     var item = results.items[i];
+    //     console.log('[%s] Title: %s', item.id.videoId, item.snippet.title);
+    // }
 }
-
-
-
-
-
