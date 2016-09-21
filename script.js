@@ -89,8 +89,6 @@ $.ajax({
   var author = res.author;
   var endPoint = 'http://www.omdbapi.com/?t=' + author + '&y=&plot=short&r=json';
   console.log(quote + ' - ' + author);
-  $('h3').text(quote);
-  $('#movie').text('- ' + author);
   return $.ajax({
     type: "GET",
     url: endPoint
@@ -99,5 +97,4 @@ $.ajax({
   var plot = res.Plot;
   if (res.Plot == undefined || res.Plot == 'N/A') plot = "plot not found";
   console.log(plot);
-  $('#plot').text(plot);
 });
