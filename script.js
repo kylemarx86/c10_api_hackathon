@@ -1,15 +1,23 @@
-////THE MOVIE DATABASE AJAX CALL TEST
+/**
+ Project Name: SNAPPY TITLE
+ File Name: script.js
+ Author: Collette Tamez, Daniel Lee, Dave Weizenegger, Kyle Marx
+ Date: 09/21/2016
+ Objective: Hackathon project involving the combination of different data sources into an application or game
+ Prompt: https://github.com/Learning-Fuze/c10_api_hackathon/
+ */
 /**
  * makeFirstAjaxCall - makes a request to The Movie DB to return search results via AJAX
+ * @param movie
  */
-function makeAjaxCall() {
+function makeTmdbAjaxCall(movie) {
     /**
      * dataToSendServerForFirstCall - local variable that holds the data to send to The Movie DB database API in the first AJAX call
-     * @type {{api_key: string, query: string}}
+     * @type {{api_key: string, query: *}}
      */
     var dataToSendServerForFirstCall = {
         api_key: "7e73e5037ed00682f5aae1e5b6d940a4",
-        query: "star wars vii"
+        query: movie
     };
     /**
      * dataToSendServerForSecondCall - local variable that holds the data to send to The Movie DB database in the second AJAX call
@@ -100,5 +108,35 @@ $(document).ready(function () {
  * addClickHandlers - and click handler functions to button in DOM with id of movieInfo
  */
 function addClickHandlers() {
-    $("#movieInfo").click(makeAjaxCall);
+    $("#movieInfo").click(function() {
+        makeAjaxCall('star wars vii');
+    });
+    $("#random").click(quoteToMovie);
 }
+/**
+ * quoteToMovie - makes an ajax call to famous quotes API and calls the makeTmdbAjaxCall function on success
+ */
+function quoteToMovie() {
+    $.ajax({
+        type: "POST",
+        headers: {
+            "X-Mashape-Key": "OivH71yd3tmshl9YKzFH7BTzBVRQp1RaKLajsnafgL2aPsfP9V"
+        },
+        dataType: 'json',
+        url: 'https://andruxnet-random-famous-quotes.p.mashape.com/?cat=movies'
+    }).then(function(res) {
+        ///console.log(res);
+        /**
+         * quote - local variable that holds value of the key "quote" in the response object
+         */
+        var quote = res.quote;
+        /**
+         * * quote - local variable that holds value of the key "author" in the response object
+         * @type {any}
+         */
+        var movie = res.author;
+       /// console.log(quote + ' - ' + movie);
+        makeTmdbAjaxCall(movie);
+    });
+}
+
