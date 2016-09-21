@@ -24,6 +24,11 @@ function addEventHandlers() {
 
 }
 
+function convert() {
+    
+}
+
+
 // videos main link is    https://www.youtube.com/watch?v=
 
 
@@ -42,15 +47,19 @@ function searchByKeyword(keyword) {
         dataType: 'jsonp',
         url: 'https://www.googleapis.com/youtube/v3/search',
         method: 'get',
-        key: 'AIzaSyCJxCXv2qoUoEDzB7_GvxXJe_SqCJT_KJg',
-        q: keyword,
-        part: 'snippet',
-        maxResults: 5,
-        // type: 'video',
+        data: {
+            key: 'AIzaSyCJxCXv2qoUoEDzB7_GvxXJe_SqCJT_KJg',
+            q: keyword,
+            part: 'snippet',
+            maxResults: 2
+        },
         success: function (response) {
             console.log('we got a movie');
-            globalResult = response;
-            // console.log(response);
+            var videoId = response.items[0].id.videoId;
+            console.log(videoId);
+            $('<p>').text(videoId);
+            var fullAddress = 'https://www.youtube.com/watch?v=' + videoId;
+            console.log(fullAddress);
         },
         error: function () {
             console.log('what a failure?');
