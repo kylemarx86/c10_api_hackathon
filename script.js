@@ -62,8 +62,12 @@ function makeSecondAjaxCall() {
         },
         success: function (response) {
             var movieData = response;
+            var moviePoster = movieData.poster_path;
             console.log("success!");
             console.log(movieData);
+            $("<img>").attr({
+                src: "http://image.tmdb.org/t/p/original/" + moviePoster
+            }).appendTo("#divForQuote");
             $("<h1>").text(movieData.original_title).appendTo("#divForQuote");
             $("<h2>").text(movieData.tagline).appendTo("#divForQuote");
             $("<h3>").text(movieData.release_date).appendTo("#divForQuote");
@@ -72,5 +76,7 @@ function makeSecondAjaxCall() {
     });
     console.log("END");
 }
+
 ////TODO: HOLD api-key => key AS ONE VARIABLE?
 ////TODO: PATH PARAMETERS?
+
