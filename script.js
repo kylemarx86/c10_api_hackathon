@@ -1,4 +1,13 @@
 ////THE MOVIE DATABASE AJAX CALL TEST
+
+
+/**
+ * call addClickHandlers on page load
+ */
+$(document).ready(function () {
+    addClickHandlers();
+    console.log("PAGE LOADED")
+});
 /**
  * makeFirstAjaxCall - makes a request to The Movie DB to return search results via AJAX
  */
@@ -50,17 +59,48 @@ function makeAjaxCall() {
 }
 
 /**
- * call addClickHandlers on page load
+ * Define all global variables here
  */
-$(document).ready(function () {
-    addClickHandlers();
-    console.log("PAGE LOADED")
-});
+var searchTerm = "";
+var url = "";
+
+
+
+/**
+ * Function to start the ajax call to itunes
+ */
+function searchItunes() {
+    searchTerm = $('#searchIt').val();
+    url = "https://itunes.apple.com/search?media=music&order=popular&term=" + searchTerm + " soundtrack&callback=?";
+
+    $.getJSON(url, function (data) {
+
+        $('#musicSrc').attr('src', data.results[0].previewUrl);
+        $('#musicImg').attr('src', data.results[0].artworkUrl100);
+        $('#artistName').text(data.results[0].artistName);
+        $('#music').attr('src', data.results[0].previewUrl);
+    });
+
+}
+
+/**
+ * Create the music player
+ */
+var music = document.getElementById("music");
+music.pause();
+music.volume = 1.0;
+
 /**
  * addClickHandlers - and click handler functions to dom elements
  */
 function addClickHandlers() {
     $("#movieInfo").click(makeAjaxCall);
+    /**
+     * Clickhandler for ajaxCall
+     */
+    $('#ajaxCall').click(function () {
+        searchItunes();
+    });
 }
 
 ////TODO: HOLD api-key => key AS ONE VARIABLE?
