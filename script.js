@@ -7,7 +7,7 @@ function makeFirstAjaxCall() {
     console.log("FUNCTION START");
     var dataToSendServer = {
         api_key: "7e73e5037ed00682f5aae1e5b6d940a4",
-        query: "inception"
+        query: "star+wars+vii"
     };
     console.log("BEGIN AJAX");
     $.ajax({
@@ -56,18 +56,21 @@ function makeSecondAjaxCall() {
         data: apiKey,
         dataType: "JSON",
         method: "GET",
-        url: "https://api.themoviedb.org/3/movie/27205?", //notice the string of numbers which is the path parameter. Each movie has a unique ID in the database
+        url: "https://api.themoviedb.org/3/movie/140607?", //notice the string of numbers which is the path parameter. Each movie has a unique ID in the database
         error: function (response) {
             console.log("THERE WAS AN ERROR: " + response);
         },
         success: function (response) {
             var movieData = response;
-            var moviePoster = movieData.poster_path;
+            var moviePoster = "http://image.tmdb.org/t/p/original" + movieData.backdrop_path;
             console.log("success!");
             console.log(movieData);
+           /*
             $("<img>").attr({
-                src: "http://image.tmdb.org/t/p/original/" + moviePoster
+                src: "http://image.tmdb.org/t/p/w342/" + moviePoster
             }).appendTo("#divForQuote");
+            */
+            $("body").css('background-image', 'url(' + moviePoster + ')');
             $("<h1>").text(movieData.original_title).appendTo("#divForQuote");
             $("<h2>").text(movieData.tagline).appendTo("#divForQuote");
             $("<h3>").text(movieData.release_date).appendTo("#divForQuote");
