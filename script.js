@@ -24,7 +24,7 @@ function makeTmdbAjaxCall(movie) {
      * @type {{api_key: string}}
      */
     var dataToSendServerForSecondCall  = {
-        api_key: "7e73e5037ed00682f5aae1e5b6d940a4" // for second ajax call
+        api_key: "7e73e5037ed00682f5aae1e5b6d940a4"
     };
     /**
      * AJAX call to The Movie Database API that performs a search query based on the keyword variable
@@ -58,7 +58,7 @@ function makeTmdbAjaxCall(movie) {
          * url - stores the url to be sent to the data base that includes the necessary path parameter
          * @type {string}
          */
-        var url = 'https://api.themoviedb.org/3/movie/' + movieID + '?';
+        var urlForMovieData = 'https://api.themoviedb.org/3/movie/' + movieID + '?';
         /**
          * ajax call to The Movie DB API to retrieve detailed movie information
          */
@@ -66,7 +66,7 @@ function makeTmdbAjaxCall(movie) {
             data: dataToSendServerForSecondCall,
             dataType: "JSON",
             method: "GET",
-            url: url,
+            url: urlForMovieData,
             /**
              * anonymous error function - lets the user know there was an error
              * @param response
@@ -106,13 +106,44 @@ $(document).ready(function () {
     addClickHandlers();
 });
 /**
+ * searchTerm - empty string
+ * @type {string}
+ */
+var searchTerm = "";
+/**
+ * url - empty string to be defined later
+ * @type {string}
+ */
+var url = "";
+/**
+ * Function to start the ajax call to itunes
+ */
+function searchItunes() {
+    searchTerm = $('#searchIt').val();
+    url = "https://itunes.apple.com/search?media=music&order=popular&term=" + searchTerm + " soundtrack&callback=?";
+    $.getJSON(url, function (data) {
+        $('#musicSrc').attr('src', data.results[0].previewUrl);
+        $('#musicImg').attr('src', data.results[0].artworkUrl100);
+        $('#artistName').text(data.results[0].artistName);
+        $('#music').attr('src', data.results[0].previewUrl);
+    });
+}
+/**
+ * music - variable to create music player
+ * @type {Element}
+ */
+var music = document.getElementById("music");
+music.pause();
+music.volume = 1.0;
+/**
  * addClickHandlers - and click handler functions to button in DOM with id of movieInfo
  */
 function addClickHandlers() {
-    $("#movieInfo").click(function() {
-        makeAjaxCall('star wars vii');
-    });
     $("#random").click(quoteToMovie);
+    $('#ajaxCall').click(function () {
+        searchItunes();
+        makeAjaxCall();
+    });
 }
 /**
  * quoteToMovie - makes an ajax call to famous quotes API and calls the makeTmdbAjaxCall function on success
@@ -132,12 +163,12 @@ function quoteToMovie() {
          */
         var quote = res.quote;
         /**
-         * * quote - local variable that holds value of the key "author" in the response object
-         * @type {any}
+         * local variable that holds value of the key "author" in the response object
+         * @type {*}
          */
         var movie = res.author;
-       /// console.log(quote + ' - ' + movie);
+        /// console.log(quote + ' - ' + movie);
         makeTmdbAjaxCall(movie);
-    });
+    })
 }
 
