@@ -1,5 +1,5 @@
 /**
- * Project Name: SNAPPY TITLE
+ * Project Name: Movies in a Snap!
  * File Name: script.js
  * Author: Collette Tamez, Daniel Lee, Dave Weizenegger, Kyle Marx
  * Date: 09/21/2016
@@ -98,18 +98,33 @@ function makeTmdbAjaxCall(movie) {
                  */
                 var moviePoster = "http://image.tmdb.org/t/p/original" + movieData.backdrop_path;
                 $("#divForMovieInfo").empty();
-                $("<img>").attr({
-                    src: moviePoster
-                }).appendTo("#divForImage");
-                $("<h1>").text(movieData.original_title).appendTo("#divForMovieInfo");
-                $("<h2>").text(movieData.tagline).appendTo("#divForMovieInfo");
-                $("<h3>").text(movieData.release_date).appendTo("#divForMovieInfo");
-                $("<p>").text(movieData.overview).appendTo("#divForMovieInfo");
+                $("main").css('background-image', 'url(' + moviePoster + ')');
+                $("<h1>").text(movieData.original_title).appendTo("#divForMovieTitle");
+                $("<h2>").text(movieData.tagline).appendTo("#divForSummary");
+                $("<h3>").text("Released: " + movieData.release_date).appendTo("#divForSummary");
+                $("<p>").text(movieData.overview).appendTo("#divForSummary");
             }
         })
     })
 }
 
+/**
+ * url - empty string to be defined later
+ * @type {string}
+ */
+var url = "";
+/**
+ * Function to start the ajax call to itunes
+ */
+function searchItunes(search) {
+    url = "https://itunes.apple.com/search?media=music&order=popular&term=" + search + " soundtrack&callback=?";
+    $.getJSON(url, function (data) {
+        $('#musicSrc').attr('src', data.results[0].previewUrl);
+        $('#musicImg').attr('src', data.results[0].artworkUrl100);
+        $('#artistName').text(data.results[0].artistName);
+        $('#music').attr('src', data.results[0].previewUrl);
+    });
+}
 /**
  * addClickHandlers - and click handler functions to button in DOM with id of movieInfo
  */

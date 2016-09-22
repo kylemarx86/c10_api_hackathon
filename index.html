@@ -2,34 +2,35 @@
 <html>
 <head>
     <title>Movies in a Snap!</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="script.js"></script>
 </head>
 <body>
 <header>
-    <h1>Movies in a Snap!</h1>
+    <p>Movies in a Snap!</p>
     <input id="search" type="text">
     <button id="movieInfo">Get Movie Data</button>
     <button id="random">Random</button>
 </header>
 <main>
-    <div id="divForImage"> div for images</div>
-    <div id="divForQuote">
-        quote div
-    </div>
-    <div id="divForMovieInfo">div for movie info</div>
-    <div id="divForTrailer">
-        <!-- the attributes href, data-videoid, and src need the videoId, hence they are missing from the following line-->
-        <iframe class="embedded-video-large" frameborder="0" allowfullscreen="1" title="YouTube video player" width="400" height="230" id="youTubeVid" style="width: 400px; height: 230px;"></iframe>
-    </div>
-    <div id="divForMusicPlayer">
-        <audio id="music" controls>
-            <source id="musicSrc" type="audio/mpeg">
-        </audio><br>
-        <img id="musicImg" />
-        <div id="artistName"></div>
-    </div>
+   <div id="holdContent" class="movieDiv">
+       <div id="divForMovieTitle"></div>
+       <div id="divForQuote"></div>
+       <div id="divForTrailer">
+           <!-- the attributes href, data-videoid, and src need the videoId, hence they are missing from the following line-->
+           <iframe class="embedded-video-large" frameborder="0" allowfullscreen="1" title="YouTube video player" width="400" height="230" id="youTubeVid" style="width: 400px; height: 230px;"></iframe>
+       </div>
+       <div id="divForSummary"></div>
+       <div id="divForMusicPlayer">
+           <img id="musicImg" />
+           <div id="artistName"></div>
+           <audio id="music" controls>
+               <source id="musicSrc" type="audio/mpeg">
+           </audio><br>
+       </div>
+   </div>
 </main>
 </body>
 </html>

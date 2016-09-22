@@ -1,13 +1,67 @@
 body{
     text-align: center;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
 }
+/*HEADER STYLING*/
 header{
-    border: 1px solid purple;
+    background-color: #560808;
+    padding: 1%;
+    color: white;
 }
+button{
+    border-radius: 0;
+    height: 40px;
+    background-color: #eaaf25;
+    color: white;
+    border-color: transparent;
+    font-size: 16px;
+}
+header > p{
+    float: left;
+    margin-top: 0;
+}
+input{
+    height: 33px;
+    width: 25vw;
+ }
+/*main content styling*/
+main{
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-image: url("assets/theater.jpg");
+    color: #FFC107;
+    position: fixed;
+}
+.movieDiv{
+    background: rgba(0, 0, 0, 0.6);
+    opacity: 0.2;
+    height: inherit;
+    width: 80%;
+    transition: all 1s;
+    margin: auto;
+    padding: 3%;
+}
+#divForTrailer{
+    opacity: 0;
+    transition: all 1s;
+}
+.movieDiv:hover{
+    opacity: 1;
+}
+.movieDiv:hover  #divForTrailer{
+    opacity: 1;
+}
+h1{
+    margin-top: 0;
+}
+/*Music Play Styling*/
 #divForMusicPlayer{
-    height: 20vh;
-    border: 1px double lavender;
+    width: 50%;
+    margin: auto;
 }
-#divForImage{
-    height: 70vh;
+#musicImg{
+    float: left;
+    margin-right: 1%;
 }
