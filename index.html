@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Movies in a Snap!</title>
@@ -18,7 +19,10 @@
         quote div
     </div>
     <div id="divForMovieInfo">div for movie info</div>
-    <div id="divForVideo">div for video</div>
+    <div id="divForTrailer">
+        <!-- the attributes href, data-videoid, and src need the videoId, hence they are missing from the following line-->
+        <iframe class="embedded-video-large" frameborder="0" allowfullscreen="1" title="YouTube video player" width="400" height="230" id="youTubeVid" style="width: 400px; height: 230px;"></iframe>
+    </div>
     <div id="divForMusicPlayer">
         <audio id="music" controls>
             <source id="musicSrc" type="audio/mpeg">

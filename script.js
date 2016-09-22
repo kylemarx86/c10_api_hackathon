@@ -1,10 +1,10 @@
 /**
- Project Name: SNAPPY TITLE
- File Name: script.js
- Author: Collette Tamez, Daniel Lee, Dave Weizenegger, Kyle Marx
- Date: 09/21/2016
- Objective: Hackathon project involving the combination of different data sources into an application or game
- Prompt: https://github.com/Learning-Fuze/c10_api_hackathon/
+ * Project Name: SNAPPY TITLE
+ * File Name: script.js
+ * Author: Collette Tamez, Daniel Lee, Dave Weizenegger, Kyle Marx
+ * Date: 09/21/2016
+ * Objective: Hackathon project involving the combination of different data sources into an application or game
+ * Prompt: https://github.com/Learning-Fuze/c10_api_hackathon/
  */
 /**
  * makeFirstAjaxCall - makes a request to The Movie DB to return search results via AJAX
@@ -24,7 +24,7 @@ function makeTmdbAjaxCall(movie) {
      * @type {{api_key: string}}
      */
     var dataToSendServerForSecondCall  = {
-        api_key: "7e73e5037ed00682f5aae1e5b6d940a4" // for second ajax call
+        api_key: "7e73e5037ed00682f5aae1e5b6d940a4"
     };
     /**
      * AJAX call to The Movie Database API that performs a search query based on the keyword variable
@@ -58,7 +58,7 @@ function makeTmdbAjaxCall(movie) {
          * url - stores the url to be sent to the data base that includes the necessary path parameter
          * @type {string}
          */
-        var url = 'https://api.themoviedb.org/3/movie/' + movieID + '?';
+        var urlForMovieData = 'https://api.themoviedb.org/3/movie/' + movieID + '?';
         /**
          * ajax call to The Movie DB API to retrieve detailed movie information
          */
@@ -66,7 +66,7 @@ function makeTmdbAjaxCall(movie) {
             data: dataToSendServerForSecondCall,
             dataType: "JSON",
             method: "GET",
-            url: url,
+            url: urlForMovieData,
             /**
              * anonymous error function - lets the user know there was an error
              * @param response
@@ -108,12 +108,44 @@ $(document).ready(function () {
     addClickHandlers();
 });
 /**
+ * searchTerm - empty string
+ * @type {string}
+ */
+var searchTerm = "";
+/**
+ * url - empty string to be defined later
+ * @type {string}
+ */
+var url = "";
+/**
+ * Function to start the ajax call to itunes
+ */
+function searchItunes(search) {
+    searchTerm = search;
+    url = "https://itunes.apple.com/search?media=music&order=popular&term=" + searchTerm + " soundtrack&callback=?";
+    $.getJSON(url, function (data) {
+        $('#musicSrc').attr('src', data.results[0].previewUrl);
+        $('#musicImg').attr('src', data.results[0].artworkUrl100);
+        $('#artistName').text(data.results[0].artistName);
+        $('#music').attr('src', data.results[0].previewUrl);
+    });
+}
+/**
+ * music - variable to create music player
+ * @type {Element}
+ */
+var music = document.getElementById("music");
+music.pause();
+music.volume = 1.0;
+/**
  * addClickHandlers - and click handler functions to button in DOM with id of movieInfo
  */
 function addClickHandlers() {
     $("#movieInfo").click(function() {
         var search = $('#search').val();
         makeTmdbAjaxCall(search);
+        updateMovieTrailerByKeyword(search);
+        searchItunes(search);
     });
     $("#random").click(quoteToMovie);
 }
@@ -135,13 +167,48 @@ function quoteToMovie() {
          */
         var quote = res.quote;
         /**
-         * * quote - local variable that holds value of the key "author" in the response object
-         * @type {any}
+         * local variable that holds value of the key "author" in the response object
+         * @type {*}
          */
         var movie = res.author;
+
         $("<h2>").text('"' + quote + '"').appendTo("#divForQuote");
-        /// console.log(quote + ' - ' + movie);
         makeTmdbAjaxCall(movie);
+        updateMovieTrailerByKeyword(movie);
+        searchItunes(movie);
+    })
+}
+/**
+ * This function updates the movie trailer by searching for an video official movie trailer of the given movie on youTube.
+ * The function will take a movie title (keyword) and appends the phrase ' official trailer' to the search term.
+ * The video's ID is stored and then used in the appropriate attributes (href, data-videoid, and src) in the iframe video on the index to allow the movie to play.
+ * Note that this sample limits the results to 1.
+ * @param {string} keyword
+ */
+function updateMovieTrailerByKeyword(keyword) {
+    keyword += ' official trailer';
+    var result = null;
+    $.ajax({
+        dataType: 'jsonp',
+        url: 'https://www.googleapis.com/youtube/v3/search',
+        method: 'get',
+        data: {
+            key: 'AIzaSyCJxCXv2qoUoEDzB7_GvxXJe_SqCJT_KJg',
+            q: keyword,
+            part: 'snippet',
+            maxResults: 1
+        },
+        success: function (response) {
+            // console.log('we got a movie');
+            var videoId = response.items[0].id.videoId;
+            var hrefMain = '//www.youtube.com/watch?v=';
+            var srcMain = 'https://www.youtube.com/embed/';
+            var srcExtra = '?cc_load_policy=1&amp;controls=2&amp;rel=0&amp;hl=en&amp;enablejsapi=1&amp;origin=https%3A%2F%2Fsupport.google.com&amp;widgetid=1';
+
+            $('#youTubeVid').attr({'href': hrefMain + videoId, 'data-videoid': videoId, 'src': srcMain + videoId + srcExtra});
+        },
+        error: function (response) {
+            console.log('what a failure?');
+        }
     });
 }
-
