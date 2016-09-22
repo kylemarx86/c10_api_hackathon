@@ -10,21 +10,25 @@ header{
     color: white;
 }
 button{
-    border-radius: 0;
+    border-radius: 8px;;
     height: 40px;
     background-color: #eaaf25;
     color: white;
     border-color: transparent;
     font-size: 16px;
+    margin-left: 1%;
 }
 header > p{
     float: left;
-    margin-top: 0;
 }
 input{
     height: 33px;
     width: 25vw;
  }
+header > img{
+    height: 5rem;
+    float: left;
+}
 /*main content styling*/
 main{
     height: 100%;
