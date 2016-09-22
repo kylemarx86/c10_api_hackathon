@@ -119,8 +119,7 @@ var url = "";
  * Function to start the ajax call to itunes
  */
 function searchItunes(search) {
-    searchTerm = search;
-    url = "https://itunes.apple.com/search?media=music&order=popular&term=" + searchTerm + " soundtrack&callback=?";
+    url = "https://itunes.apple.com/search?media=music&order=popular&term=" + search + " soundtrack&callback=?";
     $.getJSON(url, function (data) {
         $('#musicSrc').attr('src', data.results[0].previewUrl);
         $('#musicImg').attr('src', data.results[0].artworkUrl100);
@@ -152,6 +151,8 @@ function addClickHandlers() {
  * movieSearch - makes all the ajax calls to the different APIs
  */
 function movieSearch() {
+    $("#divForImage").empty();
+    $("#divForQuote").empty();
     var search = $('#search').val();
     makeTmdbAjaxCall(search);
     updateMovieTrailerByKeyword(search);
@@ -162,6 +163,8 @@ function movieSearch() {
  * quoteToMovie - makes an ajax call to famous quotes API and calls the makeTmdbAjaxCall function on success
  */
 function quoteToMovie() {
+    $("#divForImage").empty();
+    $("#divForQuote").empty();
     $.ajax({
         type: "POST",
         headers: {
