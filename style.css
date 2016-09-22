@@ -72,4 +72,14 @@ h1{
 #hideThis{
     float: right;
     display: none;
+    color: #ccc;
+}
+#divForSummary, h3{
+    color: white;
+}
+#divForTagline, #artistName{
+    color: darkgoldenrod;
+}
+#divForQuote{
+    color: rgb(253, 212, 117);
 }
