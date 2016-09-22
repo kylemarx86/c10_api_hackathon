@@ -10,22 +10,29 @@ header{
     color: white;
 }
 button{
-    border-radius: 0;
+    border-radius: 8px;;
     height: 40px;
     background-color: #eaaf25;
     color: white;
     border-color: transparent;
     font-size: 16px;
+    margin-left: 1%;
 }
 header > p{
     float: left;
-    margin-top: 0;
 }
 input{
     height: 33px;
     width: 25vw;
-    font-size: 20px;
  }
+header > img{
+    height: 5rem;
+    float: left;
+}
+header > img:last-of-type{
+    float: right;
+    height: 3rem;
+}
 /*main content styling*/
 main{
     height: 100%;
@@ -37,41 +44,26 @@ main{
 }
 .movieDiv{
     background: rgba(0, 0, 0, 0.6);
-    opacity: 0.2;
+    opacity: 1;
     height: inherit;
-    width: 80%;
+    width: 60%;
     transition: all 1s;
     margin: auto;
     padding: 3%;
 }
+/*
 #divForTrailer{
     opacity: 0;
     transition: all 1s;
 }
-.movieDiv:hover{
-    opacity: 1;
-}
-.movieDiv:hover  #divForTrailer{
-    opacity: 1;
-}
+*/
+
+
 h1{
     margin-top: 0;
 }
 /*Music Play Styling*/
 #divForMusicPlayer{
-    opacity: 0;
     width: 50%;
     margin: auto;
-    transition: all 1s;
-}
-.movieDiv:hover  #divForMusicPlayer{
-    opacity: 1;
-}
-#musicImg{
-    opacity: 0;
-    margin-right: 1%;
-    transition: all 1s;
-}
-.movieDiv:hover  #musicImg{
-    opacity: 1;
 }
