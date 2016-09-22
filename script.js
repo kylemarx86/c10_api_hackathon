@@ -197,19 +197,31 @@ function retrieveMusicFromITunes(movie) {
         $('#artistName').text(data.results[0].artistName);
         $('#music').attr('src', data.results[0].previewUrl);
     });
-}/*****/
+}
+/**
+ * Function to hide the movie info when the hover button is hovered
+ * @function hideMovieInfo
+ */
 function hideMovieInfo() {
     $("#holdContent").css({
         opacity: 0,
         transition: "all 1s"
     });
 }
+/**
+ * Function to show the movie info when the hover button is not hovered
+ * @function displayMovieInfo
+ */
 function displayMovieInfo() {
     $("#holdContent").css({
         opacity: 1,
         transition: "all 1s"
     })
 }
+/**
+ * Function to show elements hidden on initialization, namely the music player and the hide button, when the first movie's data is populated
+ * @function showHiddenElements
+ */
 function showHiddenElements() {
     $("#hideThis").css({
         display: "initial"
