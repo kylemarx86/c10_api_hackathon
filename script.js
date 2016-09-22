@@ -27,6 +27,8 @@ function addEventHandlers() {
     $('#search').keyup(function(e) {
         if (e.which === 13) {
             searchForMovie();
+            $('#divForMusicPlayer').show().css({ display: 'inline-block' });
+            $("input").val('');
         }
     });
     $("#random").click(generateQuoteAndMovieInfo);
