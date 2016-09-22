@@ -5,6 +5,7 @@
  * Date: 09/21/2016
  * Objective: Hackathon project involving the combination of different data sources into an application or game
  * Prompt: https://github.com/Learning-Fuze/c10_api_hackathon/
+ * Special thanks to youTube, google, iTunes, Apple, The Movie Database, and andruxnet for the use of their APIs in this project
  * @name script.js
  * @version 1.0
  */
@@ -71,7 +72,7 @@ function generateQuoteAndMovieInfo() {
 }
 
 /**
- * Makes a request to The Movie DB to return search results via AJAX
+ * Makes a request to The Movie Db to return search results via AJAX
  * @function retrieveDetailedMovieInfoFromTMDB
  * @param movie - the name of the movie we are trying to get more information about
  */
