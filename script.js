@@ -23,10 +23,10 @@ $(document).ready(function () {
  * @function addEventHandlers
  */
 function addEventHandlers() {
-    $("#movieInfo").click(searchForMovie );
+    $("#movieInfo").click(searchForMovie);
     $('#search').keyup(function(e) {
         if (e.which === 13) {
-            searchForMovie ();
+            searchForMovie();
         }
     });
     $("#random").click(generateQuoteAndMovieInfo);
@@ -43,6 +43,7 @@ function addEventHandlers() {
  */
 function searchForMovie () {
     var search = $('#search').val();
+    $("#divForQuote").empty();
     if(search === ''){
         generateQuoteAndMovieInfo();
     }else{
@@ -50,6 +51,7 @@ function searchForMovie () {
         retrieveMovieTrailerFromYouTube(search);
         retrieveMusicFromITunes(search);
     }
+    $("input").val('');
 }
 
 /**
@@ -69,6 +71,7 @@ function generateQuoteAndMovieInfo() {
     }).then(function(res) {
         var quote = res.quote;  //local variable that holds value of the key "quote" in the response object
         var movie = res.author; //local variable that holds value of the key "author" (which happens to be the movie the quote is from) in the response object
+        $('#search').val('');
         $("#divForQuote").empty();
         $("<h2>").text('"' + quote + '"').appendTo("#divForQuote");
         retrieveDetailedMovieInfoFromTMDB(movie);
