@@ -29,6 +29,8 @@ function addEventHandlers() {
         }
     });
     $("#random").click(generateQuoteAndMovieInfo);
+    $("header > img").mouseover(hideMovieInfo);
+    $("header > img").mouseout(displayMovieInfo);
 }
 
 /**
@@ -59,9 +61,8 @@ function generateQuoteAndMovieInfo() {
         dataType: 'json',
         url: 'https://andruxnet-random-famous-quotes.p.mashape.com/?cat=movies'
     }).then(function(res) {
-        var quote = res.quote;      //local variable that holds value of the key "quote" in the response object
-        var movie = res.author;     //local variable that holds value of the key "author" (which happens to be the movie the quote is from) in the response object
-
+        var quote = res.quote;  //local variable that holds value of the key "quote" in the response object
+        var movie = res.author; //local variable that holds value of the key "author" (which happens to be the movie the quote is from) in the response object
         $("<h2>").text('"' + quote + '"').appendTo("#divForQuote");
         retrieveDetailedMovieInfoFromTMDB(movie);
         retrieveMovieTrailerFromYouTube(movie);
@@ -122,8 +123,8 @@ function retrieveDetailedMovieInfoFromTMDB(movie) {
              * @param response
              */
             success: function (response) {
-                var movieData = response;       //local variable that stores the response object
-                var moviePoster = "http://image.tmdb.org/t/p/original" + movieData.backdrop_path;       // local variable that concats URL needed to resolve a TMDB image and the backdrop_path image file path in response object
+                var movieData = response;   //local variable that stores the response object
+                var moviePoster = "http://image.tmdb.org/t/p/original" + movieData.backdrop_path;  // local variable that concats URL needed to resolve a TMDB image and the backdrop_path image file path in response object
                 $("#divForMovieTitle").empty();
                 $("#divForQuote").empty();
                 $("#divForSummary").empty();
@@ -186,4 +187,16 @@ function retrieveMusicFromITunes(movie) {
         $('#artistName').text(data.results[0].artistName);
         $('#music').attr('src', data.results[0].previewUrl);
     });
+}/*****/
+function hideMovieInfo() {
+    $("#holdContent").css({
+        opacity: 0,
+        transition: "all 1s"
+    });
+}
+function displayMovieInfo() {
+    $("#holdContent").css({
+        opacity: 1,
+        transition: "all 1s"
+    })
 }
