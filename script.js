@@ -1,11 +1,20 @@
 /**
- * Project Name: SNAPPY TITLE
+ * Project Name: Movies in a Snap!
  * File Name: script.js
  * Author: Collette Tamez, Daniel Lee, Dave Weizenegger, Kyle Marx
  * Date: 09/21/2016
  * Objective: Hackathon project involving the combination of different data sources into an application or game
  * Prompt: https://github.com/Learning-Fuze/c10_api_hackathon/
  */
+
+/**
+ * Listen for the document to load and calls addClickHandlers function
+ */
+$(document).ready(function () {
+    addClickHandlers();
+    quoteToMovie();
+});
+
 /**
  * makeFirstAjaxCall - makes a request to The Movie DB to return search results via AJAX
  * @param movie
@@ -100,17 +109,6 @@ function makeTmdbAjaxCall(movie) {
 }
 
 /**
- * Listen for the document to load and calls addClickHandlers function
- */
-$(document).ready(function () {
-    addClickHandlers();
-});
-/**
- * searchTerm - empty string
- * @type {string}
- */
-var searchTerm = "";
-/**
  * url - empty string to be defined later
  * @type {string}
  */
@@ -154,9 +152,25 @@ function movieSearch() {
     $("#divForImage").empty();
     $("#divForQuote").empty();
     var search = $('#search').val();
-    makeTmdbAjaxCall(search);
-    updateMovieTrailerByKeyword(search);
-    searchItunes(search);
+    if(search != ''){
+        makeTmdbAjaxCall(search);
+        updateMovieTrailerByKeyword(search);
+        searchItunes(search);
+    }else
+        quoteToMovie();
+}
+
+/**
+ * Function to start the ajax call to itunes
+ */
+function searchItunes(search) {
+    var url = "https://itunes.apple.com/search?media=music&order=popular&term=" + search + " soundtrack&callback=?";
+    $.getJSON(url, function (data) {
+        $('#musicSrc').attr('src', data.results[0].previewUrl);
+        $('#musicImg').attr('src', data.results[0].artworkUrl100);
+        $('#artistName').text(data.results[0].artistName);
+        $('#music').attr('src', data.results[0].previewUrl);
+    });
 }
 
 /**
