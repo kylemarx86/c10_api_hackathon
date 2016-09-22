@@ -1,5 +1,5 @@
 /**
- * Project Name: SNAPPY TITLE
+ * Project Name: Movies in a Snap!
  * File Name: script.js
  * Author: Collette Tamez, Daniel Lee, Dave Weizenegger, Kyle Marx
  * Date: 09/21/2016
@@ -9,9 +9,8 @@
  * @version         //??????????????????????to be filled in
  */
 
-
 /**
- * Listen for the document to load and calls addClickHandlers function
+ * Listen for the document to load and calls addEventHandlers function
  */
 $(document).ready(function () {
     addEventHandlers();
@@ -130,14 +129,14 @@ function retrieveDetailedMovieInfoFromTMDB(movie) {
             success: function (response) {
                 var movieData = response;       //local variable that stores the response object
                 var moviePoster = "http://image.tmdb.org/t/p/original" + movieData.backdrop_path;       // local variable that concats URL needed to resolve a TMDB image and the backdrop_path image file path in response object
-                $("#divForMovieInfo").empty();
-                $("<img>").attr({
-                    src: moviePoster
-                }).appendTo("#divForImage");                //?????????????????????????????readability issue - should we reconsider moving to one line
-                $("<h1>").text(movieData.original_title).appendTo("#divForMovieInfo");
-                $("<h2>").text(movieData.tagline).appendTo("#divForMovieInfo");
-                $("<h3>").text(movieData.release_date).appendTo("#divForMovieInfo");
-                $("<p>").text(movieData.overview).appendTo("#divForMovieInfo");
+                $("#divForMovieTitle").empty();
+                $("#divForQuote").empty();
+                $("#divForSummary").empty();
+                $("main").css('background-image', 'url(' + moviePoster + ')');
+                $("<h1>").text(movieData.original_title).appendTo("#divForMovieTitle");
+                $("<h2>").text(movieData.tagline).appendTo("#divForSummary");
+                $("<h3>").text("Released: " + movieData.release_date).appendTo("#divForSummary");
+                $("<p>").text(movieData.overview).appendTo("#divForSummary");
             }
         })
     })
@@ -178,7 +177,6 @@ function retrieveMovieTrailerFromYouTube(movie) {
     });
 }
 
-
 /**
  * Function to start the AJAX call to iTunes        //???????????????????? is this an accurate definiton??????
  * @function retrieveMusicFromITunes
@@ -195,6 +193,3 @@ function retrieveMusicFromITunes(movie) {
         $('#music').attr('src', data.results[0].previewUrl);
     });
 }
-
-
-
