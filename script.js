@@ -6,6 +6,15 @@
  * Objective: Hackathon project involving the combination of different data sources into an application or game
  * Prompt: https://github.com/Learning-Fuze/c10_api_hackathon/
  */
+
+/**
+ * Listen for the document to load and calls addClickHandlers function
+ */
+$(document).ready(function () {
+    addClickHandlers();
+    quoteToMovie();
+});
+
 /**
  * makeFirstAjaxCall - makes a request to The Movie DB to return search results via AJAX
  * @param movie
@@ -102,13 +111,6 @@ function makeTmdbAjaxCall(movie) {
 }
 
 /**
- * Listen for the document to load and calls addClickHandlers function
- */
-$(document).ready(function () {
-    addClickHandlers();
-});
-
-/**
  * addClickHandlers - and click handler functions to button in DOM with id of movieInfo
  */
 function addClickHandlers() {
@@ -137,16 +139,10 @@ function movieSearch() {
 }
 
 /**
- * url - empty string to be defined later
- * @type {string}
- */
-var url = "";
-/**
  * Function to start the ajax call to itunes
  */
 function searchItunes(search) {
-    console.log("search is: ", search);
-    url = "https://itunes.apple.com/search?media=music&order=popular&term=" + search + " soundtrack&callback=?";
+    var url = "https://itunes.apple.com/search?media=music&order=popular&term=" + search + " soundtrack&callback=?";
     $.getJSON(url, function (data) {
         $('#musicSrc').attr('src', data.results[0].previewUrl);
         $('#musicImg').attr('src', data.results[0].artworkUrl100);
