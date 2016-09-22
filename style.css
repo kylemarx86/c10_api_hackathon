@@ -18,6 +18,10 @@ button{
     font-size: 16px;
     margin-left: 1%;
 }
+button:hover {
+	cursor: pointer;
+	background-color: #ffb300;
+}
 header > p{
     float: left;
 }
