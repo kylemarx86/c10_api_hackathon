@@ -88,12 +88,14 @@ function makeTmdbAjaxCall(movie) {
                  * @type {string}
                  */
                 var moviePoster = "http://image.tmdb.org/t/p/original" + movieData.backdrop_path;
-                $("#divForQuote").empty();
-                $("body").css('background-image', 'url(' + moviePoster + ')');
-                $("<h1>").text(movieData.original_title).appendTo("#divForQuote");
-                $("<h2>").text(movieData.tagline).appendTo("#divForQuote");
-                $("<h3>").text(movieData.release_date).appendTo("#divForQuote");
-                $("<p>").text(movieData.overview).appendTo("#divForQuote");
+                $("#divForMovieInfo").empty();
+                $("<img>").attr({
+                    src: moviePoster
+                }).appendTo("#divForImage");
+                $("<h1>").text(movieData.original_title).appendTo("#divForMovieInfo");
+                $("<h2>").text(movieData.tagline).appendTo("#divForMovieInfo");
+                $("<h3>").text(movieData.release_date).appendTo("#divForMovieInfo");
+                $("<p>").text(movieData.overview).appendTo("#divForMovieInfo");
             }
         })
     })
@@ -169,14 +171,13 @@ function quoteToMovie() {
          * @type {*}
          */
         var movie = res.author;
-        /// console.log(quote + ' - ' + movie);
+
+        $("<h2>").text('"' + quote + '"').appendTo("#divForQuote");
         makeTmdbAjaxCall(movie);
         updateMovieTrailerByKeyword(movie);
         searchItunes(movie);
     })
 }
-
-
 /**
  * This function updates the movie trailer by searching for an video official movie trailer of the given movie on youTube.
  * The function will take a movie title (keyword) and appends the phrase ' official trailer' to the search term.
@@ -187,7 +188,6 @@ function quoteToMovie() {
 function updateMovieTrailerByKeyword(keyword) {
     keyword += ' official trailer';
     var result = null;
-
     $.ajax({
         dataType: 'jsonp',
         url: 'https://www.googleapis.com/youtube/v3/search',
