@@ -27,6 +27,7 @@ function addEventHandlers() {
     $('#search').keyup(function(e) {
         if (e.which === 13) {
             searchForMovie();
+            showHiddenElements();
         }
     });
     $("#random").click(generateQuoteAndMovieInfo);
