@@ -126,13 +126,6 @@ function searchItunes(search) {
     });
 }
 /**
- * music - variable to create music player
- * @type {Element}
- */
-var music = document.getElementById("music");
-music.pause();
-music.volume = 1.0;
-/**
  * addClickHandlers - and click handler functions to button in DOM with id of movieInfo
  */
 function addClickHandlers() {
