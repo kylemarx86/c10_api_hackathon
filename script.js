@@ -107,28 +107,6 @@ function makeTmdbAjaxCall(movie) {
 $(document).ready(function () {
     addClickHandlers();
 });
-/**
- * searchTerm - empty string
- * @type {string}
- */
-var searchTerm = "";
-/**
- * url - empty string to be defined later
- * @type {string}
- */
-var url = "";
-/**
- * Function to start the ajax call to itunes
- */
-function searchItunes(search) {
-    url = "https://itunes.apple.com/search?media=music&order=popular&term=" + search + " soundtrack&callback=?";
-    $.getJSON(url, function (data) {
-        $('#musicSrc').attr('src', data.results[0].previewUrl);
-        $('#musicImg').attr('src', data.results[0].artworkUrl100);
-        $('#artistName').text(data.results[0].artistName);
-        $('#music').attr('src', data.results[0].previewUrl);
-    });
-}
 
 /**
  * addClickHandlers - and click handler functions to button in DOM with id of movieInfo
@@ -150,9 +128,31 @@ function movieSearch() {
     $("#divForImage").empty();
     $("#divForQuote").empty();
     var search = $('#search').val();
-    makeTmdbAjaxCall(search);
-    updateMovieTrailerByKeyword(search);
-    searchItunes(search);
+    if(search != ''){
+        makeTmdbAjaxCall(search);
+        updateMovieTrailerByKeyword(search);
+        searchItunes(search);
+    }else
+        quoteToMovie();
+}
+
+/**
+ * url - empty string to be defined later
+ * @type {string}
+ */
+var url = "";
+/**
+ * Function to start the ajax call to itunes
+ */
+function searchItunes(search) {
+    console.log("search is: ", search);
+    url = "https://itunes.apple.com/search?media=music&order=popular&term=" + search + " soundtrack&callback=?";
+    $.getJSON(url, function (data) {
+        $('#musicSrc').attr('src', data.results[0].previewUrl);
+        $('#musicImg').attr('src', data.results[0].artworkUrl100);
+        $('#artistName').text(data.results[0].artistName);
+        $('#music').attr('src', data.results[0].previewUrl);
+    });
 }
 
 /**
