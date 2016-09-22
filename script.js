@@ -92,7 +92,7 @@ function makeTmdbAjaxCall(movie) {
                 $("main").css('background-image', 'url(' + moviePoster + ')');
                 $("<h1>").text(movieData.original_title).appendTo("#divForMovieTitle");
                 $("<h2>").text(movieData.tagline).appendTo("#divForSummary");
-                $("<h3>").text(movieData.release_date).appendTo("#divForSummary");
+                $("<h3>").text("Released: " + movieData.release_date).appendTo("#divForSummary");
                 $("<p>").text(movieData.overview).appendTo("#divForSummary");
             }
         })
