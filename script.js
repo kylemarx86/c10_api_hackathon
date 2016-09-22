@@ -137,6 +137,7 @@ function retrieveDetailedMovieInfoFromTMDB(movie) {
                 var moviePoster = "http://image.tmdb.org/t/p/original" + movieData.backdrop_path;  // local variable that concats URL needed to resolve a TMDB image and the backdrop_path image file path in response object
                 $("#divForMovieTitle").empty();
                 $("#divForSummary").empty();
+                $("#divForTagline").empty();
                 $("main").css('background-image', 'url(' + moviePoster + ')');
                 $("<h1>").text(movieData.original_title).appendTo("#divForMovieTitle");
                 $("<h2>").text(movieData.tagline).appendTo("#divForTagline");
