@@ -50,6 +50,7 @@ function searchForMovie () {
         retrieveMovieTrailerFromYouTube(search);
         retrieveMusicFromITunes(search);
     }
+    $("input").val('');
 }
 
 /**
