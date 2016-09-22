@@ -88,12 +88,14 @@ function makeTmdbAjaxCall(movie) {
                  * @type {string}
                  */
                 var moviePoster = "http://image.tmdb.org/t/p/original" + movieData.backdrop_path;
-                $("#divForQuote").empty();
-                $("body").css('background-image', 'url(' + moviePoster + ')');
-                $("<h1>").text(movieData.original_title).appendTo("#divForQuote");
-                $("<h2>").text(movieData.tagline).appendTo("#divForQuote");
-                $("<h3>").text(movieData.release_date).appendTo("#divForQuote");
-                $("<p>").text(movieData.overview).appendTo("#divForQuote");
+                $("#divForMovieInfo").empty();
+                $("<img>").attr({
+                    src: moviePoster
+                }).appendTo("#divForImage");
+                $("<h1>").text(movieData.original_title).appendTo("#divForMovieInfo");
+                $("<h2>").text(movieData.tagline).appendTo("#divForMovieInfo");
+                $("<h3>").text(movieData.release_date).appendTo("#divForMovieInfo");
+                $("<p>").text(movieData.overview).appendTo("#divForMovieInfo");
             }
         })
     })
@@ -137,7 +139,8 @@ function quoteToMovie() {
          * @type {any}
          */
         var movie = res.author;
-       /// console.log(quote + ' - ' + movie);
+        $("<h2>").text('"' + quote + '"').appendTo("#divForQuote");
+        /// console.log(quote + ' - ' + movie);
         makeTmdbAjaxCall(movie);
     });
 }
