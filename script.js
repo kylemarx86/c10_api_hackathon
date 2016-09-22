@@ -89,13 +89,11 @@ function makeTmdbAjaxCall(movie) {
                  */
                 var moviePoster = "http://image.tmdb.org/t/p/original" + movieData.backdrop_path;
                 $("#divForMovieInfo").empty();
-                $("<img>").attr({
-                    src: moviePoster
-                }).appendTo("#divForImage");
-                $("<h1>").text(movieData.original_title).appendTo("#divForMovieInfo");
-                $("<h2>").text(movieData.tagline).appendTo("#divForMovieInfo");
-                $("<h3>").text(movieData.release_date).appendTo("#divForMovieInfo");
-                $("<p>").text(movieData.overview).appendTo("#divForMovieInfo");
+                $("main").css('background-image', 'url(' + moviePoster + ')');
+                $("<h1>").text(movieData.original_title).appendTo("#divForMovieTitle");
+                $("<h2>").text(movieData.tagline).appendTo("#divForSummary");
+                $("<h3>").text(movieData.release_date).appendTo("#divForSummary");
+                $("<p>").text(movieData.overview).appendTo("#divForSummary");
             }
         })
     })
