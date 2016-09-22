@@ -141,14 +141,25 @@ music.volume = 1.0;
  * addClickHandlers - and click handler functions to button in DOM with id of movieInfo
  */
 function addClickHandlers() {
-    $("#movieInfo").click(function() {
-        var search = $('#search').val();
-        makeTmdbAjaxCall(search);
-        updateMovieTrailerByKeyword(search);
-        searchItunes(search);
+    $("#movieInfo").click(movieSearch);
+    $('#search').keyup(function(e) {
+        if (e.which === 13) {
+            movieSearch();
+        }
     });
     $("#random").click(quoteToMovie);
 }
+
+/**
+ * movieSearch - makes all the ajax calls to the different APIs
+ */
+function movieSearch() {
+    var search = $('#search').val();
+    makeTmdbAjaxCall(search);
+    updateMovieTrailerByKeyword(search);
+    searchItunes(search);
+}
+
 /**
  * quoteToMovie - makes an ajax call to famous quotes API and calls the makeTmdbAjaxCall function on success
  */
