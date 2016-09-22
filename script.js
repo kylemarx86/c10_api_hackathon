@@ -30,8 +30,9 @@ function addEventHandlers() {
         }
     });
     $("#random").click(quoteToMovie);
-    $("header > img").mouseover(hideMovieInfo);
-    $("header > img").mouseout(displayMovieInfo);
+    $("button").click(showHiddenElements);
+    $("#hideThis").mouseover(hideMovieInfo);
+    $("#hideThis").mouseout(displayMovieInfo);
 }
 
 /**
@@ -134,7 +135,7 @@ function retrieveDetailedMovieInfoFromTMDB(movie) {
                 $("#divForSummary").empty();
                 $("main").css('background-image', 'url(' + moviePoster + ')');
                 $("<h1>").text(movieData.original_title).appendTo("#divForMovieTitle");
-                $("<h2>").text(movieData.tagline).appendTo("#divForSummary");
+                $("<h2>").text(movieData.tagline).appendTo("#divForTagline");
                 $("<h3>").text("Released: " + movieData.release_date).appendTo("#divForSummary");
                 $("<p>").text(movieData.overview).appendTo("#divForSummary");
             }
@@ -204,4 +205,12 @@ function displayMovieInfo() {
         opacity: 1,
         transition: "all 1s"
     })
+}
+function showHiddenElements() {
+    $("#hideThis").css({
+        display: "initial"
+    });
+    $("#divForMusicPlayer").css({
+        display: "inline-block"
+    });
 }
