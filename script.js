@@ -6,6 +6,42 @@
  * Objective: Hackathon project involving the combination of different data sources into an application or game
  * Prompt: https://github.com/Learning-Fuze/c10_api_hackathon/
  */
+
+//??????????????????????????????????   global ??????????????
+/**
+ * music - variable to create music player
+ * @type {Element}
+ */
+var music = document.getElementById("music");
+music.pause();
+music.volume = 1.0;
+
+
+
+
+/**
+ * Listen for the document to load and calls addClickHandlers function
+ */
+$(document).ready(function () {
+    addEventHandlers();
+});
+
+/**
+ * @function addEventHandlers
+ * Adds click handler functions to button to the movie search (#movieInfo) and random movie (#random) buttons in DOM
+ * Also adds a keyup handler for the enter key to activate the same function that handles the movie search function
+ */
+function addEventHandlers() {
+    $("#movieInfo").click(movieSearch);
+    $('#search').keyup(function(e) {
+        if (e.which === 13) {
+            movieSearch();
+        }
+    });
+    $("#random").click(quoteToMovie);
+}
+
+
 /**
  * makeFirstAjaxCall - makes a request to The Movie DB to return search results via AJAX
  * @param movie
@@ -59,9 +95,7 @@ function makeTmdbAjaxCall(movie) {
          * @type {string}
          */
         var urlForMovieData = 'https://api.themoviedb.org/3/movie/' + movieID + '?';
-        /**
-         * ajax call to The Movie DB API to retrieve detailed movie information
-         */
+        /** ajax call to The Movie DB API to retrieve detailed movie information */
         $.ajax({
             data: dataToSendServerForSecondCall,
             dataType: "JSON",
@@ -69,6 +103,11 @@ function makeTmdbAjaxCall(movie) {
             url: urlForMovieData,
             /**
              * anonymous error function - lets the user know there was an error
+             * @param response
+             */
+
+            /**
+             * anonymous error function letting the user know there was an error
              * @param response
              */
             error: function (response) {
@@ -79,19 +118,14 @@ function makeTmdbAjaxCall(movie) {
              * @param response
              */
             success: function (response) {
-                /**
-                 * result - local variable that stores the response object
-                 */
+                /** @type {object} local variable that stores the response object */
                 var movieData = response;
-                /**
-                 * moviePoster - local variable that concats URL needed to resolve a TMDB image and the backdrop_path image file path in response object
-                 * @type {string}
-                 */
+                /** @type {string} local variable that concats URL needed to resolve a TMDB image and the backdrop_path image file path in response object */
                 var moviePoster = "http://image.tmdb.org/t/p/original" + movieData.backdrop_path;
                 $("#divForMovieInfo").empty();
                 $("<img>").attr({
                     src: moviePoster
-                }).appendTo("#divForImage");
+                }).appendTo("#divForImage");                //readability issue - should we reconsider moving to one line
                 $("<h1>").text(movieData.original_title).appendTo("#divForMovieInfo");
                 $("<h2>").text(movieData.tagline).appendTo("#divForMovieInfo");
                 $("<h3>").text(movieData.release_date).appendTo("#divForMovieInfo");
@@ -101,12 +135,7 @@ function makeTmdbAjaxCall(movie) {
     })
 }
 
-/**
- * Listen for the document to load and calls addClickHandlers function
- */
-$(document).ready(function () {
-    addClickHandlers();
-});
+
 /**
  * searchTerm - empty string
  * @type {string}
@@ -130,28 +159,13 @@ function searchItunes(search) {
         $('#music').attr('src', data.results[0].previewUrl);
     });
 }
-/**
- * music - variable to create music player
- * @type {Element}
- */
-var music = document.getElementById("music");
-music.pause();
-music.volume = 1.0;
-/**
- * addClickHandlers - and click handler functions to button in DOM with id of movieInfo
- */
-function addClickHandlers() {
-    $("#movieInfo").click(movieSearch);
-    $('#search').keyup(function(e) {
-        if (e.which === 13) {
-            movieSearch();
-        }
-    });
-    $("#random").click(quoteToMovie);
-}
+
 
 /**
- * movieSearch - makes all the ajax calls to the different APIs
+ * @function movieSearch
+ * Handler for the AJAX calls to the different APIs based on a user input
+ * Function will take the user-generate value in the text input (#search) and store the value
+ *
  */
 function movieSearch() {
     var search = $('#search').val();
@@ -161,7 +175,7 @@ function movieSearch() {
 }
 
 /**
- * quoteToMovie - makes an ajax call to famous quotes API and calls the makeTmdbAjaxCall function on success
+ * quoteToMovie - makes an AJAX call to famous quotes API and calls the makeTmdbAjaxCall function on success
  */
 function quoteToMovie() {
     $.ajax({
