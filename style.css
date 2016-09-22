@@ -29,6 +29,7 @@ input{
     height: 33px;
     width: 25vw;
     font-size: 20px;
+    padding: 10px;
  }
 header > img{
     height: 5rem;
