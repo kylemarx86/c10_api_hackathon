@@ -12,7 +12,7 @@
  */
 $(document).ready(function () {
     addClickHandlers();
-    quoteToMovie();
+    $('#music').hide();
 });
 
 /**
@@ -143,7 +143,10 @@ function addClickHandlers() {
  */
 function movieSearch() {
     $("#divForImage").empty();
+    $("#divForMovieTitle").empty();
+    $("#divForSummary").empty();
     $("#divForQuote").empty();
+    $('#music').show();
     var search = $('#search').val();
     if(search != ''){
         makeTmdbAjaxCall(search);
@@ -172,6 +175,9 @@ function searchItunes(search) {
 function quoteToMovie() {
     $("#divForImage").empty();
     $("#divForQuote").empty();
+    $("#divForSummary").empty();
+    $("#divForMovieTitle").empty();
+    $('#music').show();
     $.ajax({
         type: "POST",
         headers: {
