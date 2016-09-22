@@ -5,8 +5,9 @@
  * Date: 09/21/2016
  * Objective: Hackathon project involving the combination of different data sources into an application or game
  * Prompt: https://github.com/Learning-Fuze/c10_api_hackathon/
- * @name            //??????????????????????to be filled in
- * @version         //??????????????????????to be filled in
+ * Special thanks to youTube, google, iTunes, Apple, The Movie Database, and andruxnet for the use of their APIs in this project
+ * @name script.js
+ * @version 1.0
  */
 
 /**
@@ -17,44 +18,49 @@ $(document).ready(function () {
 });
 
 /**
- * @function addEventHandlers
  * Adds click handler functions to button to the movie search (#movieInfo) and random movie (#random) buttons in DOM
  * Also adds a keyup handler for the enter key to activate the same function that handles the movie search function
- * ??????????????????we could poossibly use the @fires here. prob not worth it though????????///
+ * @function addEventHandlers
  */
 function addEventHandlers() {
-    $("#movieInfo").click(movieSearch);
+    $("#movieInfo").click(searchForMovie);
     $('#search').keyup(function(e) {
         if (e.which === 13) {
-            movieSearch();
+            searchForMovie();
         }
     });
-    $("#random").click(quoteToMovie);
-    $("header > img").mouseover(hideMovieInfo);
-    $("header > img").mouseout(displayMovieInfo);
+    $("#random").click(generateQuoteAndMovieInfo);
+    $("button").click(showHiddenElements);
+    $("#hideThis").mouseover(hideMovieInfo);
+    $("#hideThis").mouseout(displayMovieInfo);
 }
 
 /**
  * Handler for the AJAX calls to the different APIs based on a user input
  * Function will take the user-generated value in the text input (#search) and store the value. This stored value will
  * be used to call three functions that themselves make AJAX calls to retrieve more information on the movie input
- * @function movieSearch
+ * @function searchForMovie
  */
-function movieSearch() {
+function searchForMovie () {
     var search = $('#search').val();
     $("#divForQuote").empty();
-    retrieveDetailedMovieInfoFromTMDB(search);
-    retrieveMovieTrailerFromYouTube(search);
-    retrieveMusicFromITunes(search);
+    if(search === ''){
+        generateQuoteAndMovieInfo();
+    }else{
+        retrieveDetailedMovieInfoFromTMDB(search);
+        retrieveMovieTrailerFromYouTube(search);
+        retrieveMusicFromITunes(search);
+    }
+    $("input").val('');
 }
 
 /**
  * Makes an AJAX call to famous quotes API to retrieve a random movie quote and the movie it is from.
  * This then calls the retrieveDetailedMovieInfoFromTMDB, retrieveMovieTrailerFromYouTube, and retrieveMusicFromITunes functions
  * on success to retrieve more information on the movie
- * @function quoteToMovie
+ * @function generateQuoteAndMovieInfo
  */
-function quoteToMovie() {
+function generateQuoteAndMovieInfo() {
     $.ajax({
         type: "POST",
         headers: {
@@ -75,7 +81,7 @@ function quoteToMovie() {
 }
 
 /**
- * Makes a request to The Movie DB to return search results via AJAX
+ * Makes a request to The Movie Db to return search results via AJAX
  * @function retrieveDetailedMovieInfoFromTMDB
  * @param movie - the name of the movie we are trying to get more information about
  */
@@ -89,23 +95,20 @@ function retrieveDetailedMovieInfoFromTMDB(movie) {
     var dataToSendServerForSecondCall  = {
         api_key: "7e73e5037ed00682f5aae1e5b6d940a4"
     };
-    /**
-     * AJAX call to The Movie Database API that performs a search query based on the keyword variable
-     */
     $.ajax({
         data: dataToSendServerForFirstCall,
         dataType: "JSON",
         method: "GET",
         url: "https://api.themoviedb.org/3/search/movie?",
         /**
-         * anonymous error function - lets the user know their search was invalid
+         * lets the user know their search was invalid
          * @param response
          */
         error: function (response) {
             $("<h1>").text("We couldn't find anything!").appendTo("#divForQuote");
         }
         /**
-         * anonymous success function - executes on success of first ajax call?
+         * executes on success of first AJAX call
          * @param response
          */
     }).then(function (response) {
@@ -119,14 +122,14 @@ function retrieveDetailedMovieInfoFromTMDB(movie) {
             method: "GET",
             url: urlForMovieData,
             /**
-             * anonymous error function letting the user know there was an error            //?????????????????????????consider for removal
+             * lets the user know there was an error
              * @param response
              */
             error: function (response) {
                 $("<h1>").text("We couldn't find anything!").appendTo("#divForQuote");
             },
             /**
-             * anonymous success function to be handled on successful request. Appends selected information to DOM
+             * Appends selected information to DOM on success of the AJAX call
              * @param response
              */
             success: function (response) {
@@ -136,7 +139,7 @@ function retrieveDetailedMovieInfoFromTMDB(movie) {
                 $("#divForSummary").empty();
                 $("main").css('background-image', 'url(' + moviePoster + ')');
                 $("<h1>").text(movieData.original_title).appendTo("#divForMovieTitle");
-                $("<h2>").text(movieData.tagline).appendTo("#divForSummary");
+                $("<h2>").text(movieData.tagline).appendTo("#divForTagline");
                 $("<h3>").text("Released: " + movieData.release_date).appendTo("#divForSummary");
                 $("<p>").text(movieData.overview).appendTo("#divForSummary");
             }
@@ -165,6 +168,10 @@ function retrieveMovieTrailerFromYouTube(movie) {
             part: 'snippet',
             maxResults: 1
         },
+        /**
+         * adds attributes for the youTube video on success of the AJAX call
+         * @param response
+         */
         success: function (response) {
             var videoId = response.items[0].id.videoId;     //video id for the movie trailer we found
             var hrefBeginning = '//www.youtube.com/watch?v=';       //start to the href attribute for the video
@@ -172,20 +179,15 @@ function retrieveMovieTrailerFromYouTube(movie) {
             var srcEnding = '?cc_load_policy=1&amp;controls=2&amp;rel=0&amp;hl=en&amp;enablejsapi=1&amp;origin=https%3A%2F%2Fsupport.google.com&amp;widgetid=1';    //ending to th esrc attribute for the video
 
             $('#youTubeVid').attr({'href': hrefBeginning + videoId, 'data-videoid': videoId, 'src': srcBeginning + videoId + srcEnding});   //adding of the gathered attributes to the video element
-        },
-        error: function (response) {
-            console.log('a failure occured');
         }
     });
 }
 
 /**
- * Function to start the AJAX call to iTunes        //???????????????????? is this an accurate definiton??????
+ * Function to update the music player's attributes by making an AJAX call to iTunes
  * @function retrieveMusicFromITunes
  * @param {string} movie - the name of the movie we are trying to retrieve a trailer for
  */
-
-/////////////??????????????????????do we have a failure/error function for this
 function retrieveMusicFromITunes(movie) {
     var url = "https://itunes.apple.com/search?media=music&order=popular&term=" + movie + " soundtrack&callback=?";
     $.getJSON(url, function (data) {
@@ -206,4 +208,12 @@ function displayMovieInfo() {
         opacity: 1,
         transition: "all 1s"
     })
+}
+function showHiddenElements() {
+    $("#hideThis").css({
+        display: "initial"
+    });
+    $("#divForMusicPlayer").css({
+        display: "inline-block"
+    });
 }
