@@ -111,7 +111,7 @@ function retrieveDetailedMovieInfoFromTMDB(movie) {
             method: "GET",
             url: urlForMovieData,
             /**
-             * letS the user know there was an error
+             * lets the user know there was an error
              * @param response
              */
             error: function (response) {
