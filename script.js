@@ -42,6 +42,7 @@ function addEventHandlers() {
  */
 function movieSearch() {
     var search = $('#search').val();
+    $("#divForQuote").empty();
     retrieveDetailedMovieInfoFromTMDB(search);
     retrieveMovieTrailerFromYouTube(search);
     retrieveMusicFromITunes(search);
@@ -64,6 +65,7 @@ function quoteToMovie() {
     }).then(function(res) {
         var quote = res.quote;  //local variable that holds value of the key "quote" in the response object
         var movie = res.author; //local variable that holds value of the key "author" (which happens to be the movie the quote is from) in the response object
+        $('#search').val('');
         $("#divForQuote").empty();
         $("<h2>").text('"' + quote + '"').appendTo("#divForQuote");
         retrieveDetailedMovieInfoFromTMDB(movie);
