@@ -30,8 +30,9 @@ function addEventHandlers() {
         }
     });
     $("#random").click(generateQuoteAndMovieInfo);
-    $("header > img").mouseover(hideMovieInfo);
-    $("header > img").mouseout(displayMovieInfo);
+    $("button").click(showHiddenElements);
+    $("#hideThis").mouseover(hideMovieInfo);
+    $("#hideThis").mouseout(displayMovieInfo);
 }
 
 /**
@@ -42,9 +43,13 @@ function addEventHandlers() {
  */
 function searchForMovie () {
     var search = $('#search').val();
-    retrieveDetailedMovieInfoFromTMDB(search);
-    retrieveMovieTrailerFromYouTube(search);
-    retrieveMusicFromITunes(search);
+    if(search === ''){
+        generateQuoteAndMovieInfo();
+    }else{
+        retrieveDetailedMovieInfoFromTMDB(search);
+        retrieveMovieTrailerFromYouTube(search);
+        retrieveMusicFromITunes(search);
+    }
 }
 
 /**
@@ -64,6 +69,7 @@ function generateQuoteAndMovieInfo() {
     }).then(function(res) {
         var quote = res.quote;  //local variable that holds value of the key "quote" in the response object
         var movie = res.author; //local variable that holds value of the key "author" (which happens to be the movie the quote is from) in the response object
+        $("#divForQuote").empty();
         $("<h2>").text('"' + quote + '"').appendTo("#divForQuote");
         retrieveDetailedMovieInfoFromTMDB(movie);
         retrieveMovieTrailerFromYouTube(movie);
@@ -127,11 +133,10 @@ function retrieveDetailedMovieInfoFromTMDB(movie) {
                 var movieData = response;   //local variable that stores the response object
                 var moviePoster = "http://image.tmdb.org/t/p/original" + movieData.backdrop_path;  // local variable that concats URL needed to resolve a TMDB image and the backdrop_path image file path in response object
                 $("#divForMovieTitle").empty();
-                $("#divForQuote").empty();
                 $("#divForSummary").empty();
                 $("main").css('background-image', 'url(' + moviePoster + ')');
                 $("<h1>").text(movieData.original_title).appendTo("#divForMovieTitle");
-                $("<h2>").text(movieData.tagline).appendTo("#divForSummary");
+                $("<h2>").text(movieData.tagline).appendTo("#divForTagline");
                 $("<h3>").text("Released: " + movieData.release_date).appendTo("#divForSummary");
                 $("<p>").text(movieData.overview).appendTo("#divForSummary");
             }
@@ -200,4 +205,12 @@ function displayMovieInfo() {
         opacity: 1,
         transition: "all 1s"
     })
+}
+function showHiddenElements() {
+    $("#hideThis").css({
+        display: "initial"
+    });
+    $("#divForMusicPlayer").css({
+        display: "inline-block"
+    });
 }
