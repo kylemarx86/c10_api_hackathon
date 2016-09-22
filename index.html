@@ -1,15 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
-    <script type="text/javascript" src="script.js"></script>
+    <title>C10 - API HACKATHON</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="script.js"></script>
 </head>
 <body>
-    <input type="text" id="feeling" placeholder="gimme a movie name">
-    <button type="input">run</button>
-    <div id="main"></div>
-    <!-- the attributes href, data-videoid, and src need the videoId, hence they are missing from the following line-->
-    <iframe class="embedded-video-large" frameborder="0" allowfullscreen="1" title="YouTube video player" width="400" height="230" id="youTubeVid" style="width: 400px; height: 230px;"></iframe>
-        <!--<iframe href="//www.youtube.com/watch?v=lwSysg9o7wE" data-videoid="lwSysg9o7wE" class="embedded-video-large" frameborder="0" allowfullscreen="1" title="YouTube video player" width="400" height="230" src="https://www.youtube.com/embed/lwSysg9o7wE?cc_load_policy=1&amp;controls=2&amp;rel=0&amp;hl=en&amp;enablejsapi=1&amp;origin=https%3A%2F%2Fsupport.google.com&amp;widgetid=1" id="widget2" style="width: 400px; height: 230px;">-->
+    <header>
+        <h1>SNAPPY TITLE</h1>
+    </header>
+    <div id="divForImage"> div for images <br>
+        <input id="search" type="text">
+        <button id="movieInfo">Get Movie Data</button>
+        <br>
+        <button id="random">Random</button>
+        <div id="divForQuote">
+            quote div
+        </div>
+    </div>
+    <div id="divForTrailer">
+        <!-- the attributes href, data-videoid, and src need the videoId, hence they are missing from the following line-->
+        <iframe class="embedded-video-large" frameborder="0" allowfullscreen="1" title="YouTube video player" width="400" height="230" id="youTubeVid" style="width: 400px; height: 230px;"></iframe>
+    </div>
+    <div id="divForMusicPlayer">
+        <audio id="music" controls>
+            <source id="musicSrc" type="audio/mpeg">
+        </audio><br>
+        <img id="musicImg" />
+        <div id="artistName"></div>
+    </div>
+
+
 </body>
 </html>
